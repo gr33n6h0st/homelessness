@@ -1,260 +1,232 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Bridge Back — Quick Help</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg:#081018; /* deep navy */
-      --panel:#0f1720; /* slightly lighter */
-      --accent:#00ffd5; /* neon teal */
-      --accent-2:#ff6bd6; /* neon pink */
-      --muted:#9aa4b2;
-      --glass: rgba(255,255,255,0.03);
-      --danger:#ff6969;
-      font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-      color-scheme: dark;
-    }
-    html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg),#03111a);-webkit-font-smoothing:antialiased}
-    .app{max-width:900px;margin:0 auto;padding:16px;box-sizing:border-box}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BRIDGE BACK: Healing Conflict & Natural Supports</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- GLOBAL & VIDEO GAME HUD STYLES --- */
+        :root {
+            --color-bg-dark: #0A192F; /* Deep Blue/Black */
+            --color-fg-light: #64FFDA; /* Neon Green/Cyan for HUD text */
+            --color-accent: #FF5733; /* Orange/Red for warnings/action */
+            --color-module: #112240; /* Slightly lighter module background */
+            --font-main: 'Orbitron', monospace;
+            --font-body: sans-serif;
+        }
 
-    /* HUD frame */
-    .hud{
-      display:grid;grid-template-columns: 1fr;gap:12px;
-    }
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-bg-dark);
+            color: var(--color-fg-light);
+            margin: 0;
+            padding: 20px 10px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
 
-    .header{
-      display:flex;align-items:center;justify-content:space-between;padding:12px;border-radius:12px;background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);box-shadow:0 6px 20px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)
-    }
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{
-      width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;color:#021018;font-weight:700;font-family:'Orbitron',sans-serif;font-size:18px
-    }
-    .title{font-weight:600;font-size:16px}
-    .subtitle{font-size:12px;color:var(--muted)}
+        .hud-container {
+            max-width: 600px; /* Mobile-First constraint */
+            width: 100%;
+            padding: 20px;
+            border: 2px solid var(--color-fg-light); /* Main HUD Border */
+            box-shadow: 0 0 20px var(--color-fg-light), inset 0 0 10px var(--color-module); /* Glow effect */
+            border-radius: 5px;
+            background-color: var(--color-module);
+        }
 
-    .main{
-      display:grid;grid-template-columns: 1fr;gap:12px;
-    }
+        h1 {
+            font-family: var(--font-main);
+            color: var(--color-accent);
+            text-align: center;
+            text-shadow: 0 0 5px var(--color-accent);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--color-fg-light);
+            padding-bottom: 10px;
+        }
 
-    .content{
-      display:grid;grid-template-columns: 1fr;gap:12px;
-    }
+        /* --- CHAT/INTERACTION STYLES --- */
+        .chat-prompt {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-left: 3px solid var(--color-accent);
+            color: white; /* Make prompt stand out */
+        }
+        
+        .action-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 8px;
+            background-color: var(--color-bg-dark);
+            color: var(--color-fg-light);
+            border: 1px solid var(--color-fg-light);
+            text-align: left;
+            font-family: var(--font-main);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
 
-    /* Chat area */
-    .chat-wrap{background:linear-gradient(180deg,var(--panel),rgba(15,23,32,0.6));border-radius:12px;padding:12px;border:1px solid rgba(255,255,255,0.02);min-height:320px;display:flex;flex-direction:column;gap:10px}
-    .messages{flex:1;overflow:auto;padding-right:6px;display:flex;flex-direction:column;gap:8px}
-    .msg{max-width:88%;padding:10px 12px;border-radius:10px;line-height:1.25}
-    .msg.system{align-self:flex-start;background:linear-gradient(90deg,rgba(0,255,213,0.06),rgba(255,107,214,0.03));border:1px solid rgba(0,255,213,0.08);color:var(--accent);font-family:'Orbitron',sans-serif;font-size:13px}
-    .msg.user{align-self:flex-end;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.04);color:#e6eef6}
+        .action-button:hover {
+            background-color: var(--color-fg-light);
+            color: var(--color-bg-dark);
+            border-color: var(--color-accent);
+            text-shadow: none;
+        }
+        
+        .action-button:active, .action-button:focus {
+            background-color: var(--color-accent);
+            color: white;
+        }
 
-    .choices{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
-    .choice-btn{padding:8px 12px;border-radius:999px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);font-weight:600;font-size:13px;cursor:pointer}
-    .choice-btn:hover{border-color:rgba(255,255,255,0.07);color:#fff}
+        /* --- RESOURCE CARD STYLES --- */
+        .resource-card {
+            background-color: var(--color-bg-dark);
+            border: 1px dashed var(--color-accent);
+            padding: 15px;
+            margin-top: 15px;
+            margin-bottom: 20px;
+            display: none; /* Hidden by default, toggled by JS */
+            font-size: 0.95rem;
+        }
 
-    /* Resources grid */
-    .resources{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-    .card{background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
-    .card h4{margin:0 0 6px 0;font-size:14px}
-    .card p{margin:0;font-size:13px;color:var(--muted);line-height:1.3}
-    .card .tag{display:inline-block;margin-top:8px;padding:6px 8px;border-radius:6px;font-size:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02);color:var(--muted)}
+        .resource-card h2 {
+            font-family: var(--font-main);
+            color: var(--color-accent);
+            font-size: 1.2rem;
+            margin-top: 0;
+            border-bottom: 1px dashed var(--color-module);
+            padding-bottom: 5px;
+        }
+        
+        .resource-card p {
+            margin-bottom: 10px;
+        }
 
-    /* Footer / actions */
-    .actions{display:flex;gap:8px;align-items:center}
-    .btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#021018;padding:10px 14px;border-radius:10px;border:none;font-weight:700;cursor:pointer}
-    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);padding:10px 12px;border-radius:10px}
-
-    /* Mobile styles */
-    @media(min-width:720px){
-      .hud{grid-template-columns: 1fr 360px;}
-      .main{grid-template-columns:1fr 360px}
-      .resources{grid-template-columns:1fr}
-    }
-
-    /* tiny UI touches */
-    .spark{position:relative}
-    .spark:after{content:'';position:absolute;right:-10px;top:-10px;width:14px;height:14px;border-radius:50%;background:linear-gradient(90deg,var(--accent),transparent);filter:blur(6px);opacity:0.7}
-
-    /* scrollbar */
-    .messages::-webkit-scrollbar{width:6px}
-    .messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.03);border-radius:6px}
-  </style>
+        .tag {
+            display: inline-block;
+            background-color: var(--color-accent);
+            color: var(--color-bg-dark);
+            padding: 3px 6px;
+            margin-right: 5px;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            font-family: var(--font-body);
+        }
+        
+        .chat-text {
+            border: 1px solid var(--color-module);
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-  <div class="app">
-    <div class="hud">
-      <header class="header" role="banner">
-        <div class="brand">
-          <div class="logo">BB</div>
-          <div>
-            <div class="title">Bridge Back</div>
-            <div class="subtitle">Quick help—fix fights, keep supports</div>
-          </div>
+    <div class="hud-container">
+        <h1>BRIDGE BACK: Console Activated</h1>
+        
+        <div class="chat-prompt">
+            **SYSTEM ALERT: Family Conflict Detected.** Hey, thanks for checking in. It sounds tough right now. Pick the statement that matches how you feel. We'll show you the next step.
         </div>
-        <div class="spark">
-          <button class="btn-ghost" id="shareBtn" aria-label="share">Share</button>
+
+        <button class="action-button" onclick="toggleResource('resource1')">
+            > I just had a massive fight with my family and I need to try to fix it.
+        </button>
+        <div id="resource1" class="resource-card">
+            <h2>\[A] MISSION: REPAIR THE CORE CONNECTION (FNS Model)</h2>
+            <div class="chat-text">
+                <p><strong>Your Trusted Friend Says:</strong> Okay, deep breaths. This is about learning to fight *better*, not quitting. This resource is called **Family and Natural Supports (FNS)**. It’s a tool developed by people who know that your family, even when difficult, is your strongest *protective asset*.</p>
+                <p>It’s a structured way to get mediation and learn communication skills so the conflict doesn't push you onto the street. It directly targets that family conflict issue we talked about. This is all about fostering strong **Connections** (your C#1).</p>
+            </div>
+            <p class="tag">UPSTREAM PREVENTION</p>
+            <p class="tag">ACADEMIC-BACKED</p>
+            <p><strong>Critical Summary:</strong> \[*INSERT YOUR CRITICAL SUMMARY/COMMENTARY HERE. Why is this model better than traditional family counseling? What are its core principles?*]</p>
+            <p><a href="\[INSERT FNS RESOURCE LINK]" style="color: var(--color-fg-light);">**[GO TO FNS RESOURCE GUIDE]**</a></p>
         </div>
-      </header>
 
-      <!-- Right column: Resources (desktop below header on mobile) -->
-      <aside id="resourcesPanel" aria-labelledby="resourcesHeading">
-        <h3 id="resourcesHeading" style="color:var(--muted);font-size:13px;margin:8px 0">Resources</h3>
-        <div class="resources" role="list">
-          <article class="card" role="listitem">
-            <h4>Family & Natural Supports (FNS)</h4>
-            <p>Structured mediation & relationship repair. Helps youth keep or rebuild family bonds.</p>
-            <div class="tag">Academic model</div>
-          </article>
-
-          <article class="card" role="listitem">
-            <h4>Youth Reconnect</h4>
-            <p>Stabilization & re-engagement program. Keeps you in school & connected to supports.</p>
-            <div class="tag">Program</div>
-          </article>
-
-          <article class="card" role="listitem">
-            <h4>SEL Skills</h4>
-            <p>Quick self-help skills: calm breathing, boundary language, and anger tools.</p>
-            <div class="tag">Self-help</div>
-          </article>
-
-          <article class="card" role="listitem">
-            <h4>Bridging Ties & Mentors</h4>
-            <p>Mentors, teachers, or employers who can step in when family can't. Guidance & practical help.</p>
-            <div class="tag">Community</div>
-          </article>
-
-          <article class="card" role="listitem">
-            <h4>Housing First for Youth (HF4Y)</h4>
-            <p>Rights-based housing when staying isn't safe. A safety net so you can regroup.</p>
-            <div class="tag">Safety net</div>
-          </article>
+        <button class="action-button" onclick="toggleResource('resource2')">
+            > I feel angry, I might explode, and I need help dealing with my own emotions.
+        </button>
+        <div id="resource2" class="resource-card">
+            <h2>\[NA] TOOLKIT: SELF-REGULATION UPGRADE (SEL Skills)</h2>
+            <div class="chat-text">
+                <p><strong>Your Trusted Friend Says:</strong> That feeling is real, but you're in control of your response. This isn't just fluffy self-help; it’s about **Social-Emotional Learning (SEL)**. You can learn specific skills to handle your own anger, and just as importantly, learn how to deal with *their* anger.</p>
+                <p>These are the **internal assets** that prevent a conflict from going from a loud disagreement to an eviction. Mastering these skills builds massive **Confidence** (your C#2).</p>
+            </div>
+            <p class="tag">SELF-HELP</p>
+            <p class="tag">NON-ACADEMIC</p>
+            <p><strong>Critical Summary:</strong> \[*INSERT YOUR CRITICAL SUMMARY/COMMENTARY HERE. Describe the specific skills (e.g., active listening, taking a time-out). Why are these protective assets?*]</p>
+            <p><a href="\[INSERT SEL TOOLKIT/WEBSITE LINK]" style="color: var(--color-fg-light);">**[ACCESS SEL SKILL GUIDE]**</a></p>
         </div>
-      </aside>
+
+        <button class="action-button" onclick="toggleResource('resource3')">
+            > I'm out of the house right now and I need a safe place to stay immediately.
+        </button>
+        <div id="resource3" class="resource-card">
+            <h2>\[NA] INTERVENTION: STABILIZING THE SITUATION (Youth Reconnect)</h2>
+            <div class="chat-text">
+                <p><strong>Your Trusted Friend Says:</strong> Safety first. You need a stable situation so you can regroup. **Youth Reconnect** is an early intervention program designed to stabilize you *right now* so you don't end up in the shelter system. It helps you keep going with school or work and stays focused on getting you back into a stable living situation quickly.</p>
+                <p>This program is a crucial bridge. It maintains your **Competence** (your C#4) by keeping you connected to your goals and school life.</p>
+            </div>
+            <p class="tag">EARLY INTERVENTION</p>
+            <p class="tag">PROGRAM EXAMPLE</p>
+            <p><strong>Critical Summary:</strong> \[*INSERT YOUR CRITICAL SUMMARY/COMMENTARY HERE. Why is this model better than just going to a drop-in shelter? Explain how it uses a crisis moment for positive development.*]</p>
+            <p><a href="\[INSERT YOUTH RECONNECT PROGRAM LINK]" style="color: var(--color-fg-light);">**[FIND YOUTH RECONNECT NEAR ME]**</a></p>
+        </div>
+
+        <button class="action-button" onclick="toggleResource('resource4')">
+            > I need better support people outside of my immediate family.
+        </button>
+        <div id="resource4" class="resource-card">
+            <h2>\[A] ASSET BUILDER: EXPANDING YOUR NETWORK (Bridging Ties)</h2>
+            <div class="chat-text">
+                <p><strong>Your Trusted Friend Says:</strong> Smart thinking. You need **"Bridging Ties"**—connections outside of your immediate circle. Think mentors, supportive teachers, or bosses. These are your new **protective assets**. They help you navigate the system and model positive adult relationships.</p>
+                <p>Focusing on a career path or skill-building program (like the ones in your notes) is a great way to find these ties. This builds your **Contribution** (your C#5) by involving you in the wider community.</p>
+            </div>
+            <p class="tag">SOCIAL CAPITAL</p>
+            <p class="tag">ACADEMIC CONCEPT</p>
+            <p><strong>Critical Summary:</strong> \[*INSERT YOUR CRITICAL SUMMARY/COMMENTARY HERE. Contrast 'bonding supports' vs 'bridging ties.' How do employment programs like IPS or the Print Shop facilitate 'bridging ties'?*]</p>
+            <p><a href="\[INSERT MENTORSHIP/JOB PROGRAM LINK]" style="color: var(--color-fg-light);">**[EXPLORE MENTORSHIP PROGRAMS]**</a></p>
+        </div>
+
+        <button class="action-button" onclick="toggleResource('resource5')">
+            > I have no options left and I need housing as a last resort.
+        </button>
+        <div id="resource5" class="resource-card">
+            <h2>\[A] SAFETY NET: THE RIGHTS-BASED BACKSTOP (HF4Y)</h2>
+            <div class="chat-text">
+                <p><strong>Your Trusted Friend Says:</strong> If you absolutely need a safe place, you need the **Housing First for Youth (HF4Y)** approach. This is the gold standard. The key: it’s **rights-based**, meaning they give you housing **with no preconditions**. You don't have to be sober, in school, or in therapy to get a key.</p>
+                <p>This stability is non-negotiable and lets you regain your footing. Knowing this bottom line exists builds your **Character** (your C#3), allowing you to focus on your well-being without fear of eviction.</p>
+            </div>
+            <p class="tag">RIGHTS-BASED</p>
+            <p class="tag">ACADEMIC-BACKED</p>
+            <p><strong>Critical Summary:</strong> \[*INSERT YOUR CRITICAL SUMMARY/COMMENTARY HERE. Why is 'no preconditions' crucial for trauma-aware care? Explain why this is better than a traditional shelter.*]</p>
+            <p><a href="\[INSERT HF4Y RESOURCE/CONTACT LINK]" style="color: var(--color-fg-light);">**[FIND HF4Y PROGRAMS NEAR ME]**</a></p>
+        </div>
+        
     </div>
 
-    <main class="main" id="main" role="main">
-      <section class="content">
-        <div class="chat-wrap" aria-live="polite">
-          <div class="messages" id="messages">
-            <div class="msg system" data-id="m1">Hey — I'm here. What's going on at home?</div>
-          </div>
-
-          <div class="choices" id="choices">
-            <button class="choice-btn" data-action="angry">I feel angry at home</button>
-            <button class="choice-btn" data-action="thinking">I might leave soon</button>
-            <button class="choice-btn" data-action="confused">I don't know what to do</button>
-            <button class="choice-btn" data-action="safe">It's okay for now</button>
-          </div>
-
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
-            <div style="font-size:12px;color:var(--muted)">Tap one to get quick steps →</div>
-            <div class="actions">
-              <button class="btn-ghost" id="tipsBtn">Quick Tips</button>
-              <button class="btn-primary" id="helpNow">Get Immediate Options</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Optional: quick tips modal area -->
-        <div id="tips" style="display:none;margin-top:10px;padding:10px;border-radius:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.02)">
-          <strong style="color:var(--accent)">Quick Tips</strong>
-          <ul style="color:var(--muted);padding-left:18px;margin:8px 0 0 0">
-            <li>Breathe: 4 in / 6 out</li>
-            <li>Set a boundary script: "I need 10 mins to cool off"</li>
-            <li>Find 1 trusted adult to call or text</li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- Secondary column: condensed resources for mobile under main on small screens -->
-      <aside style="display:none" id="mobileResources">
-        <!-- left intentionally blank for responsive layout; desktop shows resources in right column -->
-      </aside>
-    </main>
-  </div>
-
-  <script>
-    // Simple chat flow logic
-    const messagesEl = document.getElementById('messages');
-    const choices = document.getElementById('choices');
-    const tips = document.getElementById('tips');
-
-    function appendMessage(text, cls='system'){
-      const div = document.createElement('div');
-      div.className = 'msg ' + cls;
-      div.textContent = text;
-      messagesEl.appendChild(div);
-      messagesEl.scrollTop = messagesEl.scrollHeight;
-    }
-
-    const flows = {
-      angry: [
-        "You're not wrong to feel that — anger is real.",
-        "Try this: 1) Pause and breathe (4 in/6 out). 2) Use a short line: 'I need 10 minutes' to de-escalate. 3) If you feel unsafe, step outside and call someone you trust.",
-        "Want a quick script for saying you need space?"
-      ],
-      thinking: [
-        "If you're thinking of leaving, let's check safety first.",
-        "Ask: Is there immediate danger? If yes, call emergency services. If no, consider contacting Youth Reconnect or a local shelter as a plan B.",
-        "Would you like links to stabilization programs & community supports?"
-      ],
-      confused: [
-        "Totally okay to be unsure. Small steps help.",
-        "Start with one person: a teacher, coach, or a friend's parent. You don't have to tell everything — ask for help with 'housing or a place to stay for a night.'",
-        "Want a list of mentors & quick talk scripts?"
-      ],
-      safe: [
-        "Good to hear it's okay right now. Keep a plan in your pocket — conflicts can come back.",
-        "Try journaling one thing that helped today, and one person you could call if it gets worse.",
-        "Want ideas for keeping supports strong?"
-      ]
-    };
-
-    choices.addEventListener('click', e=>{
-      const btn = e.target.closest('button');
-      if(!btn) return;
-      const action = btn.dataset.action;
-      appendMessage(btn.textContent, 'user');
-      const seq = flows[action] || ["I'm here. Tell me more."];
-      // Simulate typing
-      let i=0;
-      const typ = setInterval(()=>{
-        if(i>=seq.length){clearInterval(typ);return}
-        setTimeout(()=>appendMessage(seq[i],'system'),350*i);
-        i++;
-      },400);
-    });
-
-    document.getElementById('tipsBtn').addEventListener('click', ()=>{
-      tips.style.display = tips.style.display === 'none' ? 'block' : 'none';
-    });
-
-    document.getElementById('helpNow').addEventListener('click', ()=>{
-      appendMessage('Here are immediate options: 1) Call a trusted adult 2) Reach out to Youth Reconnect 3) If unsafe, dial emergency services', 'system');
-      // Optionally highlight resource cards
-      const cards = document.querySelectorAll('.card');
-      cards.forEach(c=>{c.style.boxShadow = '0 6px 18px rgba(0,255,213,0.04)';});
-      setTimeout(()=>{cards.forEach(c=>c.style.boxShadow='none')},2500);
-    });
-
-    // Share button (native share if available)
-    document.getElementById('shareBtn').addEventListener('click', async ()=>{
-      const url = location.href;
-      if(navigator.share){
-        try{ await navigator.share({title:'Bridge Back',text:'Quick youth help resources',url}); }catch(e){}
-      }else{
-        navigator.clipboard.writeText(url).then(()=>{
-          appendMessage('Link copied to clipboard — share with someone you trust.', 'system');
-        });
-      }
-    });
-
-    // Accessibility: focus first choice
-    document.querySelectorAll('.choice-btn')[0].focus();
-  </script>
+    <script>
+        function toggleResource(id) {
+            var card = document.getElementById(id);
+            if (card.style.display === 'block') {
+                card.style.display = 'none';
+            } else {
+                // Optional: Close all others to keep the view clean (mobile-first)
+                var allCards = document.querySelectorAll('.resource-card');
+                allCards.forEach(function(c) {
+                    if (c.id !== id) {
+                        c.style.display = 'none';
+                    }
+                });
+                card.style.display = 'block';
+            }
+        }
+    </script>
 </body>
 </html>
-

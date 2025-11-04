@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Supportive Youth Resource Chat</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+  
+  /* Mobile-first styles */
+  body {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: #fff;
+    font-family: 'Press Start 2P', monospace, sans-serif;
+    margin: 0;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .chat-container {
+    background-color: rgba(0, 0, 0, 0.85);
+    border: 3px solid #00ffea;
+    border-radius: 12px;
+    flex: 1;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    box-shadow: 0 0 20px #00ffea;
+  }
+
+  .chat-bubble {
+    background: #1a1a1a;
+    border: 2px solid #00ffea;
+    padding: 10px 14px;
+    margin: 6px 0;
+    max-width: 80%;
+    border-radius: 10px;
+    animation: fadeIn 0.4s ease forwards;
+  }
+
+  .chat-bubble.system {
+    background: #00ffea;
+    color: #000;
+    align-self: flex-start;
+  }
+
+  .chat-bubble.user {
+    background: #ff5f7e;
+    color: #fff;
+    align-self: flex-end;
+  }
+
+  .resource-list {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0 0;
+  }
+
+  .resource-item {
+    background-color: #121212;
+    border: 1px solid #00ffea;
+    margin: 0.3rem 0;
+    padding: 0.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .resource-item:hover {
+    background-color: #00ffea;
+    color: #000;
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 8px #00ffea;
+    font-size: 1.25rem;
+  }
+
+  .nav-step {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #a0f0f0;
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0; transform: translateY(8px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+
+</style>
+</head>
+<body>
+  <h1>Shift Your Story: Support Chat</h1>
+  <div class="chat-container" role="main" aria-live="polite" aria-label="Supportive chat for youth resources">
+    <div class="chat-bubble system">I feel angry at home.</div>
+    <div class="chat-bubble system nav-step">Here's What You Can Try Today:</div>
+    <ul class="resource-list" aria-label="Resource list">
+      <li class="resource-item" tabindex="0" role="button">Family and Natural Supports (FNS) Model</li>
+      <li class="resource-item" tabindex="0" role="button">Youth Reconnect Program</li>
+      <li class="resource-item" tabindex="0" role="button">Social-Emotional Learning (SEL) Skills</li>
+      <li class="resource-item" tabindex="0" role="button">Bridging Ties and Mentorship</li>
+      <li class="resource-item" tabindex="0" role="button">Housing First for Youth (HF4Y) Model</li>
+    </ul>
+  </div>
+</body>
+</html>
